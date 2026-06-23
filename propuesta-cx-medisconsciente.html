@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta CX — Medisconsciente</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=Playfair+Display:ital,wght@0,700;1,500&display=swap');
+
+  :root {
+    --verde: #2C5F5A;
+    --verde-claro: #4A9B91;
+    --crema: #F7F3ED;
+    --crema-oscuro: #EDE5D8;
+    --tierra: #8B6F47;
+    --texto: #1A2B2A;
+    --texto-suave: #4A5E5C;
+    --linea: #D4C9B8;
+    --acento: #E8704A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--crema);
+    color: var(--texto);
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--verde);
+    color: white;
+    padding: 56px 64px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    right: -80px; bottom: -80px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.08);
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    right: 40px; bottom: 20px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.06);
+  }
+
+  .tag-propuesta {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--verde-claro);
+    margin-bottom: 16px;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.15;
+    max-width: 600px;
+    margin-bottom: 24px;
+  }
+
+  header h1 em {
+    font-style: italic;
+    color: #A8D8D4;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .meta-item { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .meta-item strong { display: block; color: white; font-size: 15px; margin-bottom: 2px; }
+
+  /* ── LAYOUT ── */
+  main { max-width: 860px; margin: 0 auto; padding: 56px 32px 80px; }
+
+  section { margin-bottom: 56px; }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--verde);
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1.5px solid var(--linea);
+  }
+
+  p { color: var(--texto-suave); font-size: 15px; margin-bottom: 12px; }
+  p strong { color: var(--texto); }
+
+  /* ── PROPUESTA VALOR ── */
+  .valor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .valor-card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px 20px;
+    border: 1px solid var(--linea);
+    position: relative;
+  }
+  .valor-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--crema-oscuro);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    margin-bottom: 14px;
+  }
+  .valor-card h3 { font-size: 14px; font-weight: 700; color: var(--verde); margin-bottom: 8px; }
+  .valor-card p { font-size: 13px; margin: 0; }
+
+  /* ── FASES / ROADMAP ── */
+  .fase-list { display: flex; flex-direction: column; gap: 0; }
+
+  .fase {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 0 24px;
+    position: relative;
+  }
+  .fase:not(:last-child) .fase-line { height: 100%; }
+
+  .fase-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .fase-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--verde);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .fase-line {
+    width: 2px;
+    flex: 1;
+    background: var(--linea);
+    margin-top: 4px;
+    min-height: 32px;
+  }
+
+  .fase-body {
+    background: white;
+    border: 1px solid var(--linea);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .fase-body h3 { font-size: 15px; font-weight: 700; color: var(--texto); margin-bottom: 4px; }
+  .fase-semana { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--verde-claro); margin-bottom: 10px; }
+  .fase-body p { font-size: 13px; margin-bottom: 8px; }
+  .entregable-list { list-style: none; padding: 0; margin: 12px 0 0; }
+  .entregable-list li {
+    font-size: 13px;
+    color: var(--texto-suave);
+    padding: 5px 0 5px 20px;
+    position: relative;
+    border-top: 1px solid var(--crema-oscuro);
+  }
+  .entregable-list li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--acento);
+    font-weight: 700;
+  }
+
+  /* ── HORAS / DEDICACION ── */
+  .horas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .hora-card {
+    background: white;
+    border: 1px solid var(--linea);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .hora-card .numero {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: var(--verde);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .hora-card .unidad { font-size: 13px; color: var(--texto-suave); margin-bottom: 12px; font-weight: 500; }
+  .hora-card ul { list-style: none; padding: 0; }
+  .hora-card ul li { font-size: 13px; color: var(--texto-suave); padding: 4px 0; border-top: 1px dashed var(--linea); }
+  .hora-card ul li:first-child { border: none; }
+
+  .total-horas {
+    background: var(--verde);
+    color: white;
+    border-radius: 12px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .total-horas .label { font-size: 13px; opacity: 0.8; }
+  .total-horas .valor { font-family: 'Playfair Display', serif; font-size: 28px; }
+
+  /* ── PRICING ── */
+  .pricing-table {
+    background: white;
+    border: 1px solid var(--linea);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  .pricing-header {
+    background: var(--crema-oscuro);
+    padding: 14px 24px;
+    display: grid;
+    grid-template-columns: 1fr 100px 110px 120px;
+    gap: 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--texto-suave);
+  }
+  .pricing-row {
+    padding: 16px 24px;
+    display: grid;
+    grid-template-columns: 1fr 100px 110px 120px;
+    gap: 16px;
+    border-top: 1px solid var(--crema-oscuro);
+    align-items: center;
+  }
+  .pricing-row:hover { background: var(--crema); }
+  .pricing-row .concepto { font-size: 14px; font-weight: 500; color: var(--texto); }
+  .pricing-row .concepto span { display: block; font-size: 12px; font-weight: 400; color: var(--texto-suave); margin-top: 2px; }
+  .pricing-row .horas { font-size: 14px; color: var(--texto-suave); text-align: center; }
+  .pricing-row .tarifa { font-size: 14px; color: var(--texto-suave); text-align: right; }
+  .pricing-row .total { font-size: 15px; font-weight: 700; color: var(--verde); text-align: right; }
+
+  .pricing-footer {
+    background: var(--verde);
+    padding: 18px 24px;
+    display: grid;
+    grid-template-columns: 1fr 100px 110px 120px;
+    gap: 16px;
+    align-items: center;
+  }
+  .pricing-footer .label { color: white; font-weight: 700; font-size: 14px; }
+  .pricing-footer .total-final {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: white;
+    text-align: right;
+    grid-column: 4;
+  }
+
+  .nota-precio {
+    background: #FEF5F0;
+    border-left: 3px solid var(--acento);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--texto-suave);
+    margin-top: 4px;
+  }
+  .nota-precio strong { color: var(--acento); }
+
+  /* ── ALTERNATIVAS ── */
+  .alt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 8px;
+  }
+  .alt-card {
+    background: white;
+    border: 1px solid var(--linea);
+    border-radius: 12px;
+    padding: 22px 20px;
+    position: relative;
+  }
+  .alt-card.recomendada {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 1px var(--verde);
+  }
+  .badge-rec {
+    position: absolute;
+    top: -10px; left: 50%;
+    transform: translateX(-50%);
+    background: var(--verde);
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: 99px;
+    white-space: nowrap;
+  }
+  .alt-card h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--texto-suave); margin-bottom: 4px; }
+  .alt-precio { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--verde); line-height: 1; margin: 8px 0 4px; }
+  .alt-sub { font-size: 12px; color: var(--texto-suave); margin-bottom: 14px; }
+  .alt-card ul { list-style: none; padding: 0; }
+  .alt-card ul li { font-size: 12px; color: var(--texto-suave); padding: 5px 0; border-top: 1px dashed var(--linea); }
+
+  /* ── CONDICIONES ── */
+  .condiciones-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .cond-item {
+    background: white;
+    border: 1px solid var(--linea);
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-size: 13px;
+    color: var(--texto-suave);
+  }
+  .cond-item strong { display: block; font-size: 13px; color: var(--texto); margin-bottom: 4px; }
+
+  /* ── CTA ── */
+  .cta-block {
+    background: linear-gradient(135deg, var(--verde) 0%, #1A3E3A 100%);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    color: white;
+  }
+  .cta-block h2 { border: none; color: white; font-family: 'Playfair Display', serif; font-size: 26px; margin-bottom: 12px; }
+  .cta-block p { color: rgba(255,255,255,0.75); font-size: 15px; max-width: 480px; margin: 0 auto 24px; }
+  .cta-contacto { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .cta-link { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 8px; padding: 10px 20px; color: white; font-size: 13px; text-decoration: none; }
+
+  /* ── FIRMA ── */
+  .firma {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--linea);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .firma-nombre { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--verde); }
+  .firma-cargo { font-size: 13px; color: var(--texto-suave); margin-top: 2px; }
+  .firma-fecha { font-size: 12px; color: var(--texto-suave); text-align: right; }
+
+  @media (max-width: 680px) {
+    header { padding: 40px 24px 36px; }
+    main { padding: 40px 20px 60px; }
+    .valor-grid, .alt-grid { grid-template-columns: 1fr; }
+    .horas-grid { grid-template-columns: 1fr; }
+    .condiciones-grid { grid-template-columns: 1fr; }
+    .pricing-header, .pricing-row, .pricing-footer { grid-template-columns: 1fr 80px; }
+    .pricing-header :nth-child(2), .pricing-header :nth-child(3) { display: none; }
+    .pricing-row .horas, .pricing-row .tarifa { display: none; }
+    .pricing-footer .label { grid-column: 1; }
+    .pricing-footer .total-final { grid-column: 2; font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tag-propuesta">Propuesta de Consultoría · Customer Experience</div>
+  <h1>Instalación de una <em>práctica CX</em> en Medisconsciente</h1>
+  <div class="header-meta">
+    <div class="meta-item">
+      <strong>Elaborada por</strong>
+      Felipe Acuña — CX & Data Science
+    </div>
+    <div class="meta-item">
+      <strong>Dirigida a</strong>
+      Equipo Medisconsciente.com
+    </div>
+    <div class="meta-item">
+      <strong>Modalidad</strong>
+      Part-time · 8 hrs/semana
+    </div>
+    <div class="meta-item">
+      <strong>Vigencia oferta</strong>
+      Julio 2026
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- PROPUESTA DE VALOR -->
+  <section>
+    <h2>¿Qué aportaré?</h2>
+    <p>Medisconsciente tiene una oportunidad clara: convertir la experiencia de sus usuarios en un motor de retención y referidos, no solo en una métrica de satisfacción. Mi propuesta combina diagnóstico rápido, instalación de escucha sistemática (VoC) y acompañamiento al equipo de marketing con datos accionables.</p>
+    <div class="valor-grid">
+      <div class="valor-card">
+        <div class="valor-icon">🎙️</div>
+        <h3>Voz del Cliente (VoC)</h3>
+        <p>Instalación de un sistema MVP que capture qué dicen, sienten y necesitan los usuarios — en sus propias palabras.</p>
+      </div>
+      <div class="valor-card">
+        <div class="valor-icon">📊</div>
+        <h3>CX con foco en impacto</h3>
+        <p>Métricas e insights que el equipo de marketing puede usar directamente: sin tecnicismos, con recomendaciones claras.</p>
+      </div>
+      <div class="valor-card">
+        <div class="valor-icon">🤝</div>
+        <h3>Integración al equipo</h3>
+        <p>Trabajo colaborativo, coordinado y con reuniones ágiles. No soy un consultor externo, soy parte del staff.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN DE TRABAJO / FASES -->
+  <section>
+    <h2>Plan de trabajo — 12 semanas</h2>
+    <p>El proyecto se estructura en tres fases progresivas. Cada una tiene entregables concretos para que el equipo sienta avance desde la primera semana.</p>
+
+    <div class="fase-list" style="margin-top: 24px;">
+
+      <div class="fase">
+        <div class="fase-left">
+          <div class="fase-dot">01</div>
+          <div class="fase-line"></div>
+        </div>
+        <div class="fase-body">
+          <div class="fase-semana">Semanas 1–3 · Diagnóstico</div>
+          <h3>Escuchar antes de actuar</h3>
+          <p>Entender el negocio, los usuarios actuales y los puntos de fricción más críticos. Acordar el foco con el equipo de marketing.</p>
+          <ul class="entregable-list">
+            <li>Mapa del customer journey actual (touchpoints clave)</li>
+            <li>Inventario de datos CX existentes (reseñas, tickets, comentarios)</li>
+            <li>Definición de segmentos de usuario y momentos críticos</li>
+            <li>Documento de alcance y KPIs del proyecto</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fase">
+        <div class="fase-left">
+          <div class="fase-dot">02</div>
+          <div class="fase-line"></div>
+        </div>
+        <div class="fase-body">
+          <div class="fase-semana">Semanas 4–8 · Instalación VoC MVP</div>
+          <h3>Activar la escucha sistemática</h3>
+          <p>Diseñar e implementar los mecanismos para capturar feedback real de usuarios, de forma continua y con bajo esfuerzo operativo.</p>
+          <ul class="entregable-list">
+            <li>Encuesta post-interacción / post-compra (NPS o CES, según fit)</li>
+            <li>Protocolo de recolección de reseñas y comentarios en canales digitales</li>
+            <li>Dashboard básico de seguimiento (Google Data Studio o PowerBi local)</li>
+            <li>Primera lectura de resultados con insights accionables para marketing</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="fase">
+        <div class="fase-left">
+          <div class="fase-dot">03</div>
+          <div class="fase-line"></div>
+        </div>
+        <div class="fase-body">
+          <div class="fase-semana">Semanas 9–12 · Ciclo de mejora</div>
+          <h3>Cerrar el loop y escalar</h3>
+          <p>Convertir los insights en acciones concretas, documentar aprendizajes y definir el modelo de operación continua del VoC.</p>
+          <ul class="entregable-list">
+            <li>Informe de hallazgos y recomendaciones priorizadas</li>
+            <li>Al menos 2 mejoras implementadas o en proceso basadas en feedback real</li>
+            <li>Manual operativo del sistema VoC (para que el equipo lo mantenga autónomo)</li>
+            <li>Propuesta de continuidad: qué viene en el siguiente trimestre</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ESTRUCTURA HORARIA -->
+  <section>
+    <h2>Dedicación semanal</h2>
+    <p>Trabajo desde mi posición actual como profesional a tiempo completo, por lo que la estructura horaria es parte integral de esta propuesta. Las 8 horas semanales están distribuidas estratégicamente.</p>
+
+    <div class="horas-grid">
+      <div class="hora-card">
+        <div class="numero">2</div>
+        <div class="unidad">horas · días de semana</div>
+        <ul>
+          <li>Reunión de coordinación quincenal con marketing (45 min)</li>
+          <li>Seguimiento asíncrono: revisión de datos, respuesta a consultas</li>
+          <li>Lectura y análisis de feedback reciente</li>
+          <li>Preparación de próxima sesión sabatina</li>
+        </ul>
+      </div>
+      <div class="hora-card">
+        <div class="numero">6</div>
+        <div class="unidad">horas · sábados (bloque dedicado)</div>
+        <ul>
+          <li>Trabajo profundo: análisis, diseño de instrumentos, reportes</li>
+          <li>Construcción del dashboard y actualización de datos</li>
+          <li>Redacción de entregables de fase</li>
+          <li>Revisión de resultados VoC y generación de insights</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="total-horas">
+      <div>
+        <div class="label">Total mensual estimado</div>
+        <div style="font-size:13px; color:rgba(255,255,255,0.65); margin-top:4px;">8 hrs/semana × 4 semanas</div>
+      </div>
+      <div class="valor">~32 hrs/mes</div>
+    </div>
+  </section>
+
+  <!-- PRECIOS -->
+  <section>
+    <h2>Propuesta de honorarios</h2>
+    <p>Esta es una propuesta de entrada para un <strong>primer cliente en modalidad consultoría part-time</strong>. El precio está pensado para ser justo, sostenible y demostrar valor rápidamente — con margen para revisarlo al término de la primera fase.</p>
+
+    <div class="pricing-table">
+      <div class="pricing-header">
+        <div>Concepto</div>
+        <div style="text-align:center">Hrs/mes</div>
+        <div style="text-align:right">Tarifa UF</div>
+        <div style="text-align:right">Total mensual</div>
+      </div>
+      <div class="pricing-row">
+        <div class="concepto">
+          Coordinación y reuniones
+          <span>Reuniones con equipo de marketing + seguimiento async</span>
+        </div>
+        <div class="horas" style="text-align:center">8</div>
+        <div class="tarifa">UF 0,35/hr</div>
+        <div class="total">UF 2,8</div>
+      </div>
+      <div class="pricing-row">
+        <div class="concepto">
+          Trabajo de análisis y entregables
+          <span>Sábados: diagnóstico, VoC, reportes, dashboards</span>
+        </div>
+        <div class="horas" style="text-align:center">24</div>
+        <div class="tarifa">UF 0,45/hr</div>
+        <div class="total">UF 10,8</div>
+      </div>
+      <div class="pricing-footer">
+        <div class="label">Total mensual propuesto</div>
+        <div></div>
+        <div></div>
+        <div class="total-final">UF 13,6</div>
+      </div>
+    </div>
+
+    <div class="nota-precio">
+      <strong>Referencia orientativa:</strong> A valor UF de junio 2026 (~$39.000 CLP), esto equivale a aproximadamente <strong>$530.000–$540.000 CLP/mes</strong>. Es un precio de introducción intencional: el mercado para un consultor CX senior con perfil data-driven está entre UF 20–35/mes por esta dedicación. Esto representa <strong>~40–50% de descuento</strong> respecto a tarifa regular.
+    </div>
+  </section>
+
+  <!-- ALTERNATIVAS -->
+  <section>
+    <h2>Opciones de contratación</h2>
+    <div class="alt-grid">
+      <div class="alt-card">
+        <h3>Exploración</h3>
+        <div class="alt-precio">UF 10</div>
+        <div class="alt-sub">por mes · compromiso 1 mes</div>
+        <ul>
+          <li>Solo diagnóstico inicial</li>
+          <li>4 hrs semanales</li>
+          <li>1 entregable: journey map</li>
+          <li>Sin instalación VoC</li>
+        </ul>
+      </div>
+      <div class="alt-card recomendada">
+        <div class="badge-rec">✦ Recomendado</div>
+        <h3>Engagement completo</h3>
+        <div class="alt-precio">UF 13,6</div>
+        <div class="alt-sub">por mes · compromiso 3 meses</div>
+        <ul>
+          <li>Diagnóstico + VoC + ciclo mejora</li>
+          <li>8 hrs semanales (como propuesto)</li>
+          <li>Todos los entregables del plan</li>
+          <li>Manual operativo incluido</li>
+        </ul>
+      </div>
+      <div class="alt-card">
+        <h3>Proyecto cerrado</h3>
+        <div class="alt-precio">UF 38</div>
+        <div class="alt-sub">precio fijo · 3 meses</div>
+        <ul>
+          <li>Todo lo anterior en precio fijo</li>
+          <li>Descuento vs. mensual (~7%)</li>
+          <li>Mayor predictibilidad para ambos</li>
+          <li>Pago en 2 cuotas (inicio/cierre)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONDICIONES -->
+  <section>
+    <h2>Condiciones y acuerdos base</h2>
+    <div class="condiciones-grid">
+      <div class="cond-item">
+        <strong>📅 Disponibilidad</strong>
+        Sábados bloque principal (10:00–16:00). Días de semana: async o reunión breve en horario post-laboral o coordinado previamente.
+      </div>
+      <div class="cond-item">
+        <strong>💳 Modalidad de pago</strong>
+        Boleta de honorarios mensual, los primeros 5 días hábiles del mes.
+      </div>
+      <div class="cond-item">
+        <strong>📋 Herramientas</strong>
+        Trabajo en plataformas que ya usa el equipo. Sin costos adicionales de licencias.
+      </div>
+      <div class="cond-item">
+        <strong>🔄 Revisión de precio</strong>
+        Al término del mes 3, revisión conjunta. Si el impacto es demostrable, se propone ajuste a tarifa regular.
+      </div>
+      <div class="cond-item">
+        <strong>🚪 Salida</strong>
+        Aviso con 15 días de anticipación para ambas partes. Sin penalidades si se cumple plazo mínimo de 1 mes.
+      </div>
+      <div class="cond-item">
+        <strong>🎯 Foco inicial</strong>
+        Los primeros 3 meses se concentran exclusivamente en VoC + coordinación marketing. Sin expansión de alcance sin conversación previa.
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <h2>¿Seguimos conversando?</h2>
+    <p>Propongo una llamada de 30 minutos para alinear expectativas, resolver dudas y definir una fecha de inicio. Sin presión ni compromiso.</p>
+    <div class="cta-contacto">
+      <a class="cta-link" href="#">📧 felipeacuna @ gmail</a>
+      <a class="cta-link" href="#">💼 github.com/felipeacuna</a>
+    </div>
+  </div>
+
+  <!-- FIRMA -->
+  <div class="firma">
+    <div>
+      <div class="firma-nombre">Felipe Acuña</div>
+      <div class="firma-cargo">Sociólogo · Data Scientist · CX Consultant<br>Región Metropolitana, Chile</div>
+    </div>
+    <div class="firma-fecha">
+      Propuesta preparada en junio 2026<br>
+      Válida hasta julio
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
